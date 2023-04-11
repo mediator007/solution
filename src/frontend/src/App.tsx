@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios, { Axios, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 function App() {
   const [result, setResult] = useState();
@@ -9,7 +9,7 @@ function App() {
     axios.get(
       'http://127.0.0.1:8000/api/v1/'
       ).then((response: AxiosResponse) => {
-        console.log('response', response)
+        setResult(response.data.version)
       }).catch(error => {
         console.log('---error', error)
       })
@@ -21,7 +21,8 @@ function App() {
 
   return (
   <div>
-    Hello world!    
+    <h3>Backend API</h3>
+    version:  <div style={{color: 'green'}}>{result}</div>
   </div>
   );
 }

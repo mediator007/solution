@@ -4,16 +4,15 @@ services:
     backend:
         container_name: backend
         build: 
-            context: ./backend/
+            context: ./src/backend/
             dockerfile: Dockerfile
         restart: always
-    nginx:
-        depends_on: 
-            - backend
-        container_name: proxy
-        build: 
-            context: ./src/frontend/
-            dockerfile: Dockerfile
-        ports: 
-            - "80:80"
-        restart: always
+    
+    # nginx:
+    #     container_name: proxy
+    #     build: ./nginx
+    #     depends_on: 
+    #         - backend
+    #     ports: 
+    #         - "80:80"
+    #     restart: always

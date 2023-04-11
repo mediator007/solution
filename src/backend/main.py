@@ -3,12 +3,12 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.config import PROJECT_NAME
+from core import config
 from api.v1 import base
 
 app = FastAPI(
     # Конфигурируем название проекта. Оно будет отображаться в документации
-    title=PROJECT_NAME,
+    title=config.PROJECT_NAME,
     # Адрес документации в красивом интерфейсе
     docs_url='/api/openapi',
     # Адрес документации в формате OpenAPI

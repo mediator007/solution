@@ -7,7 +7,7 @@ function App() {
 
   function getApi () {
     axios.get(
-      'http://127.0.0.1:8000/api/v1/'
+      'http://localhost:8000/api/v1'
       ).then((response: AxiosResponse) => {
         setResult(response.data.version)
       }).catch(error => {

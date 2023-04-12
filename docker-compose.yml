@@ -6,13 +6,17 @@ services:
         build: 
             context: ./src/backend/
             dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
         restart: always
     
-    # nginx:
-    #     container_name: proxy
-    #     build: ./nginx
-    #     depends_on: 
-    #         - backend
-    #     ports: 
-    #         - "80:80"
-    #     restart: always
+    frontend:
+        container_name: frontend
+        depends_on:
+            - backend
+        build: 
+            context: ./src/frontend/
+            dockerfile: Dockerfile
+        ports:
+            - "80:80"
+        restart: always

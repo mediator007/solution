@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
@@ -18,13 +20,10 @@ app = FastAPI(
     default_response_class=ORJSONResponse,
 )
 
+host = os.environ.get('HOST')
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:80",
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:80/"
+    f"http://localhost:3000",
+    f"http://{host}:80"
 ]
 
 app.add_middleware(

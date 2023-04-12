@@ -3,6 +3,7 @@ WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONBUFFERED 1
+ENV HOST '62.84.120.221'
 
 COPY ./requirements.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt

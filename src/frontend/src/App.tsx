@@ -6,8 +6,9 @@ function App() {
   const [result, setResult] = useState();
 
   function getApi () {
+    console.log(window.location.hostname)
     axios.get(
-      'http://localhost:8000/api/v1'
+      'http://' + window.location.hostname + ':8000/api/v1'
       ).then((response: AxiosResponse) => {
         setResult(response.data.version)
       }).catch(error => {

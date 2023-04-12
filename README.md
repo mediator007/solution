@@ -1,10 +1,18 @@
 # solution
 
+### Backend:
+FastAPI
+### Frontend:
+React
+### Proxy
+Nginx
+
+## Deploy
+```docker-compose build```   
+```docker-compose up```  
+
 ## Connection
-```51.250.23.166```
+```http://62.84.120.221```
 
-## API
-```/api/v1```
-
-## Документация  
-```/api/openapi```
+### API Documentation  
+```http://62.84.120.221:8000/api/openapi```

@@ -1,6 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import { Grid, GridItem } from '@consta/uikit/Grid';
+import LoginForm from './components/UI/LoginForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [result, setResult] = useState();
@@ -21,10 +23,18 @@ function App() {
   }, [])
 
   return (
-  <div>
-    <h3>Backend API</h3>
-    version:  <div style={{color: 'green'}}>{result}</div>
-  </div>
+    <Fragment>
+      <div style={{display: 'inline-block'}}>
+        version:  <div style={{color: 'green'}}>{result}</div>
+      </div>
+      <Grid cols='5'>
+        <GridItem col='2'/>
+        <GridItem col='1'>
+          {LoginForm()}
+        </GridItem>
+        <GridItem col='2'/>
+      </Grid>
+    </Fragment>
   );
 }
 

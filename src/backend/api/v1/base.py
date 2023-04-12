@@ -7,4 +7,4 @@ router = APIRouter()
 @router.get('/')
 async def root_handler():
     print('-------- v1 ----------')
-    return JSONResponse({'version': 'v1'})
+    return JSONResponse({'version': '1.0.0'})

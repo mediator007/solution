@@ -12,7 +12,7 @@ function App() {
     axios.get(
       'http://' + window.location.hostname + ':8000/api/v1'
       ).then((response: AxiosResponse) => {
-        setResult(response.data.version)
+        setResult(response.data.api_version)
       }).catch(error => {
         console.log('---error', error)
       })

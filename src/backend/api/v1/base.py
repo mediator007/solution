@@ -1,10 +1,14 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-# Объект router, в котором регистрируем обработчики
-router = APIRouter()
+from .users import router as users_router
 
-@router.get('/')
+# Объект router, в котором регистрируем обработчики
+api_router = APIRouter()
+api_router.include_router(users_router, prefix="/users", tags=["users"]) 
+
+
+
+@api_router.get('/')
 async def root_handler():
-    print('-------- v1 ----------')
-    return JSONResponse({'version': '1.0.0'})
+    return JSONResponse({'api_version': '1.0.0'})

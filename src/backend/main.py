@@ -10,7 +10,7 @@ from api.v1 import base
 
 app = FastAPI(
     # Конфигурируем название проекта. Оно будет отображаться в документации
-    title=config.PROJECT_NAME,
+    title=config.app_settings.app_title,
     # Адрес документации в красивом интерфейсе
     docs_url='/api/openapi',
     # Адрес документации в формате OpenAPI
@@ -35,7 +35,7 @@ app.add_middleware(
 )
 
 # Подключаем роутер к серверу, указав префикс /v1
-app.include_router(base.router, prefix='/api/v1')
+app.include_router(base.api_router, prefix='/api/v1')
 
 if __name__ == '__main__':
     # Приложение может запускаться командой

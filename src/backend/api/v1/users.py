@@ -17,7 +17,6 @@ async def read_users(
     limit: int = 100
 ) -> Any:
     users = await users_crud.get_multi(db, skip=skip, limit=limit)
-    print('----------', users)
     return users
 
 
@@ -36,7 +35,6 @@ async def read_user(
 @router.post(
         "/", status_code=status.HTTP_201_CREATED,
         response_model=users_schema.User,
-        dependencies=[Depends(users_schema.UserCreate)]
         )
 async def create_user(
     user_in: users_schema.UserCreate,
@@ -46,20 +44,19 @@ async def create_user(
     return user
 
 
-# @router.delete(
-#         "/{email}", status_code=status.HTTP_202_ACCEPTED,
-#         response_model=users_schema.User
-#         )
-# def delete_user(
-#     *,
-#     db: AsyncSession = Depends(get_session),
-#     user_in=users_schema.UserDelete,
-#     email: str
-# ) -> Any:
-#     """
-#     Switch off `is_active` field on user in DB
-#     """
-#     user = {}
-#     if not user:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-#     return user 
+@router.delete(
+        "/{email}", status_code=status.HTTP_202_ACCEPTED,
+        response_model=users_schema.User
+        )
+async def delete_user(
+    *,
+    db: AsyncSession = Depends(get_session),
+    email: str
+) -> Any:
+    """
+    Switch off `is_active` field on user in DB
+    """
+    user = await users_crud.delete(db, email=email)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+    return user 

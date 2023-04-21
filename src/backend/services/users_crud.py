@@ -2,7 +2,7 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import select, update
 
 from models.user_model import Users as UsersModel
 from schemas.users import UserCreate
@@ -32,11 +32,8 @@ class RepositoryDB(Repository, Generic[ModelType, CreateSchemaType]):
         return results.scalars().all()
 
     async def create(self, db: AsyncSession, *, obj_in: CreateSchemaType) -> ModelType:
-        print('--------------', obj_in)
         obj_in_data = jsonable_encoder(obj_in)
-        print('1-----', obj_in_data)
         db_obj = self._model(**obj_in_data)
-        print('2-----', db_obj)
         db.add(db_obj)
         await db.commit()
         await db.refresh(db_obj)
@@ -44,13 +41,13 @@ class RepositoryDB(Repository, Generic[ModelType, CreateSchemaType]):
 
     async def delete(
             self, db: AsyncSession, *, email: str) -> ModelType:
+        statement = update(self._model).\
+            values(is_active=False).\
+            where(email == email)
+        await db.execute(statement=statement)
         statement = select(self._model).where(self._model.email == email)
         result = await db.execute(statement=statement)
-        result.is_active = False
-        db.add(result)
-        await db.commit()
-        await db.refresh(result)
-        return result
+        return result.scalar_one_or_none()
 
 
 class RepositoryUser(RepositoryDB[UsersModel, UserCreate]):

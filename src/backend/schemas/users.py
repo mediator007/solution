@@ -5,12 +5,11 @@ from pydantic import BaseModel
 
 class UserBase(BaseModel):
     email: str
-    is_active: bool
 
 
 class UserCreate(UserBase):
     hashed_password: str
-    created_at: datetime
+    is_active: bool
 
 
 class UserDelete(UserBase):
@@ -20,6 +19,12 @@ class UserDelete(UserBase):
 class UserInDBBase(UserBase):
     hashed_password: str
     created_at: datetime
+    is_active: bool
 
     class Config:
         orm_mode = True
+
+
+class User(UserInDBBase):
+    email: str
+    is_active: bool

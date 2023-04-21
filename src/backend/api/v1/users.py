@@ -4,10 +4,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.db import get_session
+from schemas import users as users_schema
 
 router = APIRouter()
 
-@router.get("/")
+@router.get("/", response_model=List[users_schema.UserBase])
 
 def read_users(
     db: AsyncSession = Depends(get_session),
@@ -17,7 +18,7 @@ def read_users(
     users = []
     return users
 
-@router.get("/{email}")
+@router.get("/{email}", response_model=users_schema.UserBase)
 def read_user(
     *,
     db: AsyncSession = Depends(get_session),
@@ -28,17 +29,25 @@ def read_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
     return user
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post(
+        "/", status_code=status.HTTP_201_CREATED,
+        response_model=users_schema.UserBase
+        )
 def create_user(
     db: AsyncSession = Depends(get_session),
+    user_in=users_schema.UserCreate
 ) -> Any:
     user = {}
     return user
 
-@router.delete("/{email}")
+@router.delete(
+        "/{email}", status_code=status.HTTP_202_ACCEPTED,
+        response_model=users_schema.UserDelete
+        )
 def delete_user(
     *,
     db: AsyncSession = Depends(get_session),
+    user_in=users_schema.UserDelete,
     email: str
 ) -> Any:
     """

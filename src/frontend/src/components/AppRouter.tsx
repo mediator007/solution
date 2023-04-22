@@ -1,11 +1,12 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
+import Main from "../pages/Main";
 import { authAdmin, authUser, publicRoutes } from "../routes";
 import { LOGIN_ROUTE } from "../utils/consts";
 
 const AppRouter = () => {
-    const isAuth = true
+    const isAuth = false
     const isAdmin = false
     return(
         <Routes>
@@ -23,6 +24,9 @@ const AppRouter = () => {
                 <Route 
                     key={path} path={path} 
                     Component={component}/>
+            )}
+            {(isAuth || isAdmin) && (
+                <Route path="*" Component={Main}/>
             )}
             <Route path="*" Component={Login}/>
         </Routes>

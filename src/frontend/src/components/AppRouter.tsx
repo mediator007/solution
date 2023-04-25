@@ -1,9 +1,9 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
 import { authAdmin, authUser, publicRoutes } from "../routes";
-import { LOGIN_ROUTE } from "../utils/consts";
+
 
 const AppRouter = () => {
     const isAuth = false

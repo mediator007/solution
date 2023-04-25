@@ -18,11 +18,11 @@ const Main = () => {
     React.useEffect(()=> {
       getApi()
     }, [])
-    
+
     return(
-    <div style={{display: 'inline-block'}}>
-        version:  <div style={{color: 'green'}}>{result}</div>
-    </div>           
+        <div style={{display: 'inline-block'}}>
+            version:  <div style={{color: 'green'}}>{result}</div>
+        </div>           
     )
 };
 

@@ -21,6 +21,9 @@
 - Установка зависимостей React:  
 В директории /src/frontend  
 ```npm install```  
+- Сборка React app:  
+ В директории /src/frontend  
+```npm run build```  
 - Запуск React:  
 В директории /src/frontend  
 ```npm start```  

@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
 import { authAdmin, authUser, publicRoutes } from "../routes";
+import { Context } from "../Context";
 
 
 const AppRouter = () => {
-    const isAuth = false
+    const [isAuth, setIsAuth] = React.useContext(Context)
     const isAdmin = false
     return(
         <Routes>

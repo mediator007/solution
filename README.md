@@ -7,7 +7,7 @@
 ```python3.10 -m venv venv```  
 ```pip install -r requirements```   
 ```source venv/bin/activate```  
-- Поднятие контенера БД:  
+- Поднятие контейнера БД:  
  В терминале из под виртуального окружения прописать команду:    
 ```docker run --rm --name postgres-fastapi -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -v /путь/к/папке/на/хосте:/var/lib/postgresql/data -d postgres:14.5```  
 Для входа в БД можно использовать:  

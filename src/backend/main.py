@@ -4,9 +4,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 from core import config
 from api.v1 import base
+
+load_dotenv()
 
 app = FastAPI(
     # Конфигурируем название проекта. Оно будет отображаться в документации

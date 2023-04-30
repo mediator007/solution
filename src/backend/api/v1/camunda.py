@@ -7,11 +7,10 @@ import httpx
 
 router = APIRouter()
 
-BPM_HOST = f"http://{os.getenv('BPM_HOST')}:8080/engine-rest"
-
 @router.get("/")
 async def read_bpm_users() -> Any:
+    bpm = os.environ.get('BPM_HOST')
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"{BPM_HOST}/user")
+        response = await client.get(f"http://{bpm}:8080/engine-rest/user")
     users = json.dumps((response.content).decode())
     return users

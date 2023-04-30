@@ -20,7 +20,6 @@ services:
             context: ./src/backend/
             dockerfile: Dockerfile
         command: bash -c "cd /app && alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-        # tty: true
         ports:
             - "8000:8000"
         restart: always
@@ -37,3 +36,4 @@ services:
         restart: always
 volumes:
     database-data:
+    

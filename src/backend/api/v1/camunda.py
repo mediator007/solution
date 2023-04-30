@@ -1,3 +1,4 @@
+import os
 from typing import Any
 import json
 
@@ -6,7 +7,7 @@ import httpx
 
 router = APIRouter()
 
-BPM_HOST = "http://localhost:8080/engine-rest"
+BPM_HOST = f"http://{os.getenv('BPM_HOST')}:8080/engine-rest"
 
 @router.get("/")
 async def read_bpm_users() -> Any:

@@ -44,7 +44,7 @@ http://localhost:8000/api/openapi
 
 ## Prod Deploy:  
 
-- В файле /src/backend/.env раскомментировать DATABASE_DSN для solution_database и закомментировать для localhost  
+- В файле /src/backend/.env раскомментировать переменные <u>#Production</u> и закомментировать переменные <u>#Develop</u>  
 
 - Выполнить:  
 ```docker-compose build```   

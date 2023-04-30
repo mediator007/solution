@@ -38,5 +38,8 @@
 
 ## Prod Deploy:  
 
+- В файле /src/backend/.env раскомментировать DATABASE_DSN для solution_database и закомментировать для localhost  
+
+- Выполнить:  
 ```docker-compose build```   
 ```docker-compose up```

@@ -12,7 +12,9 @@ load_dotenv('.env')
 # access to the values within the .ini file in use.
 config = context.config
 import os
-config.set_main_option('sqlalchemy.url', os.environ['DATABASE_DSN'])
+
+database_dsn = os.environ['DATABASE_DSN']
+config.set_main_option('sqlalchemy.url', database_dsn)
 
 from db.db import Base
 from models.user_model import Users, Roles

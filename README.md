@@ -28,13 +28,19 @@
 В директории /src/frontend  
 ```npm start```  
 
+### Camunda
+```docker pull camunda/camunda-bpm-platform:latest```  
+```docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest```   
+
+http://localhost:8080/camunda-welcome/index.html  
+
 ### Приложение:  
 
-```http://localhost:3000```
+http://localhost:3000  
 
 ### Документация API:  
 
-```http://localhost:8000/api/openapi```
+http://localhost:8000/api/openapi  
 
 ## Prod Deploy:  
 

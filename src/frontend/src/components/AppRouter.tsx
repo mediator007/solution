@@ -7,10 +7,12 @@ import { Context } from "../Context";
 
 
 const AppRouter = () => {
-    const [isAuth, setIsAuth] = React.useContext(Context)
+    const [isAuth, setIsAuth, roleList] = React.useContext(Context)
+    //const roleList = React.useContext(Context)
     const isAdmin = false
+
     return(
-        <Routes>
+        <Routes>            
             {isAuth && isAdmin && authAdmin.map(({path, component})=>
                 <Route 
                     key={path} path={path} 

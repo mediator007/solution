@@ -4,10 +4,12 @@ services:
     database:
         image: postgres:14.5
         container_name: solution_database
-        env_file:
-            - database.env
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres        
         volumes:
-            - /home/database-data:/var/lib/postgresql/data/
+            - ./database-data-backend:/var/lib/postgresql/data/
         ports:
             - "5432:5432"
         restart: always
@@ -16,6 +18,10 @@ services:
         container_name: solution_backend
         depends_on:
             - database
+        environment:
+            KEYCLOAK_URL: http://localhost:3080/
+            KEYCLOAK_CLIENT_ID: sovkombank
+            KEYCLOAK_REAL_NAME: sovkombank
         build: 
             context: ./src/backend/
             dockerfile: Dockerfile
@@ -23,7 +29,7 @@ services:
         ports:
             - "8000:8000"
         restart: always
-    
+   
     frontend:
         container_name: solution_frontend
         depends_on:
@@ -33,17 +39,54 @@ services:
             dockerfile: Dockerfile
         ports:
             - "80:80"
-        restart: always
+        restart: always   
     
     bpm:
         image: camunda/camunda-bpm-platform:latest 
         container_name: bpm
         depends_on:
-            - backend
+            - database
         ports:
             - "8080:8080"
         restart: always
 
-volumes:
-    database-data:
-    
+    # Service: Data base Keycloak
+    db_keycloak:
+        image: postgres:14.5
+        container_name: keycloak_db
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: keycloak            
+        volumes:
+            - ./database-data-keycloak:/var/lib/postgresql/data/
+        ports:
+            - "1521:5432"
+        restart: always
+
+
+    # Service: application Keycloak
+    app_keycloak:        
+        container_name: keycloak_app
+        environment:
+            DB_URL: http://db_keycloak
+            DB_PORT: 1521
+            DB: keycloak            
+            DB_USERNAME: postgres
+            DB_PASSWORD: postgres
+            HOSTNAME: localhost
+            KEYCLOAK_ADMIN: admin
+            KEYCLOAK_ADMIN_PASSWORD: admin
+        volumes:            
+            - ./src/keycloak/import:/opt/keycloak/data/import            
+        depends_on:
+            - db_keycloak
+        build: 
+            context: ./src/keycloak/
+            dockerfile: Dockerfile
+        ports:
+            - "3443:8443"
+            - "3080:8080"
+        restart: always
+        #override entrypoint for import settings Realm Sovkombank
+        entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]

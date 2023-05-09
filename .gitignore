@@ -110,6 +110,20 @@ ENV/
 env.bak/
 venv.bak/
 
+#database
+database-data-backend/
+database-data-keycloak/
+
+#frontend nodejs
+src/frontend/build/
+src/frontend/node_modules/
+node_modules/
+
+#backend 
+src/backend/.env
+.env
+
+
 # Spyder project settings
 .spyderproject
 .spyproject

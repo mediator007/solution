@@ -28,7 +28,8 @@ origins = [
     f"http://localhost:3000",
     f"http://localhost:80",
     f"http://localhost",
-    f"http://{host}:80"
+    f"http://{host}:80",
+    f"http://{host}"
 ]
 
 app.add_middleware(

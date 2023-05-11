@@ -1,7 +1,8 @@
 import Keycloak from "keycloak-js";
 
+
 const keycloak: Keycloak = new Keycloak({
-  url: "http://localhost:3080",
+  url: "https://localhost:3443",
   realm: "sovkombank",
   clientId: "sovkombank",
 })

@@ -1,6 +1,51 @@
 version: "3.9"
 
 services:
+
+    # Service: Data base Keycloak
+    db_keycloak:
+        image: postgres:14.5
+        container_name: keycloak_db
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: keycloak            
+        volumes:
+            - ./database-data-keycloak:/var/lib/postgresql/data/
+        ports:
+            - "1521:5432"
+        restart: always
+
+
+    # Service: application Keycloak
+    app_keycloak:        
+        container_name: keycloak_app
+        environment:
+            DB_URL: http://db_keycloak
+            DB_PORT: 1521
+            DB: keycloak            
+            DB_USERNAME: postgres
+            DB_PASSWORD: postgres
+            # for dev, for productive change to actual
+            HOSTNAME: localhost            
+            KEYCLOAK_ADMIN: admin
+            KEYCLOAK_ADMIN_PASSWORD: admin
+        volumes:            
+            - ./src/keycloak/import:/opt/keycloak/data/import            
+        depends_on:
+            - db_keycloak
+        build: 
+            context: ./src/keycloak/
+            dockerfile: Dockerfile
+        ports:
+            - "3443:8443"
+            - "3080:8080"
+        restart: always
+        # override entrypoint for import settings Realm Sovkombank
+        #entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]
+        entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--https-certificate-file=/opt/keycloak/keycloak-server.crt.pem", "--https-certificate-key-file=/opt/keycloak/keycloak-server.key.pem", "--import-realm"]    
+
+        
     database:
         image: postgres:14.5
         container_name: solution_database
@@ -18,10 +63,11 @@ services:
         container_name: solution_backend
         depends_on:
             - database
-        environment:
-            KEYCLOAK_URL: http://localhost:3080/
+            - app_keycloak
+        environment:            
+            KEYCLOAK_URL: http://app_keycloak:8080
             KEYCLOAK_CLIENT_ID: sovkombank
-            KEYCLOAK_REAL_NAME: sovkombank
+            KEYCLOAK_REALM_NAME: sovkombank
         build: 
             context: ./src/backend/
             dockerfile: Dockerfile
@@ -49,44 +95,3 @@ services:
         ports:
             - "8080:8080"
         restart: always
-
-    # Service: Data base Keycloak
-    db_keycloak:
-        image: postgres:14.5
-        container_name: keycloak_db
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: keycloak            
-        volumes:
-            - ./database-data-keycloak:/var/lib/postgresql/data/
-        ports:
-            - "1521:5432"
-        restart: always
-
-
-    # Service: application Keycloak
-    app_keycloak:        
-        container_name: keycloak_app
-        environment:
-            DB_URL: http://db_keycloak
-            DB_PORT: 1521
-            DB: keycloak            
-            DB_USERNAME: postgres
-            DB_PASSWORD: postgres
-            HOSTNAME: localhost
-            KEYCLOAK_ADMIN: admin
-            KEYCLOAK_ADMIN_PASSWORD: admin
-        volumes:            
-            - ./src/keycloak/import:/opt/keycloak/data/import            
-        depends_on:
-            - db_keycloak
-        build: 
-            context: ./src/keycloak/
-            dockerfile: Dockerfile
-        ports:
-            - "3443:8443"
-            - "3080:8080"
-        restart: always
-        #override entrypoint for import settings Realm Sovkombank
-        entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]

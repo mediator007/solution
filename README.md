@@ -8,8 +8,9 @@
 ```docker run --rm --name postgres-fastapi -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -v /путь/к/папке/на/хосте:/var/lib/postgresql/data -d postgres:14.5```  
 
 Или через docker-compose (из папки c docker-compose.yml):
-```docker-compose build database``` (сборка если нужно)
+```docker-compose build database```
 ```docker-compose up -d database```
+
 При использовании docker-compose БД создается в папке database-data-backend в текущей папке с docker-compose.yml
 
 Для входа в БД можно использовать:  
@@ -17,7 +18,7 @@
 или через утилиту на хосте:  
 ```psql -h localhost -p 5432 -U postgres```
 
-### Поднятие backend приложение (FastApi - в конфигурации стенда логично запускать в режиме приложения, а не контейнера)
+### Поднятие backend приложение (в конфигурации для разработки логично запускать в режиме приложения, а не контейнера)
 1) Установить виртуальное окружение:  
 В директории /src/backend   
 ```python3.10 -m venv venv```  
@@ -37,7 +38,7 @@ KEYCLOAK_URL: "http://localhost:3080/"
 KEYCLOAK_CLIENT_ID: "sovkombank"
 KEYCLOAK_REAL_NAME: "sovkombank"
 
-### Фронтенд (в конфигурации стенда логично запускать стенд в режиме приложения, а не контейнера)
+### Фронтенд (в конфигурации для разработки логично запускать стенд в режиме приложения, а не контейнера)
 1) В директории /src/frontend
 ```npm install```  
 - Сборка React app:  
@@ -46,10 +47,6 @@ KEYCLOAK_REAL_NAME: "sovkombank"
 - Запуск React:  
 3) В директории /src/frontend  
 ```npm start```
-
-!!! Для подключения к Keycloak используется конфиг файл: ./src/Keycloak.tsx
-(Для продуктива необходимо изменить параметры подключения на корректные)
-
 
 ### Keycloak (запуск в контейнере)
 1) Сборка и запуск контейнера - Базы данных Keycloak - из папки c docker-compose.yml
@@ -64,8 +61,6 @@ KEYCLOAK_REAL_NAME: "sovkombank"
 3) Создать пользователей в Keycloak: http://localhost:3080, admin/admin
 Создаем пользователей и через Role maping назначаем им роли из clien sovkombank (сейчас импортируются две роли: user_sovkombank и admin_sovkombank)
 (позже автоматизируем)
-
-!!! Для запуска в продуктиве сменить режим запуска и адрес хоста
 
 
 ### Camunda
@@ -85,6 +80,9 @@ http://localhost:8000/api/openapi
 ## Prod Deploy:  
 
 - В файле /src/backend/.env раскомментировать переменные <u>#Production</u> и закомментировать переменные <u>#Develop</u>  
+- Для frontend сконфигурировать файл: ./src/Keycloak.tsx (если требуется)
+- Для app_keycloak в docker-compose.yml сменить режим запуска и адрес хоста,отключить импорт настроек рилма (по необходимости)
+- Для backend в docker-compose.yml указать корректные KEYCLOAK_URL, KEYCLOAK_CLIENT_ID, KEYCLOAK_REAL_NAME (если требуется)
 
 - Выполнить:  
 ```docker-compose build```   

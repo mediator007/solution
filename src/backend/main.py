@@ -26,7 +26,9 @@ app = FastAPI(
 host = os.environ.get('HOST')
 origins = [
     f"http://localhost:3000",
+    f"http://localhost:8000",
     f"http://localhost:80",
+    f"http://localhost:3080",    
     f"http://localhost",
     f"http://{host}:80",
     f"http://{host}"

@@ -17,6 +17,10 @@ RUN /opt/keycloak/bin/kc.sh build
 #FROM quay.io/keycloak/keycloak:latest
 FROM quay.io/keycloak/keycloak:21.1
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
+COPY ./certs/* /opt/keycloak/
+
+USER 0
+RUN chmod a+r /opt/keycloak/*.pem
 
 # Start container in dev mode
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--https-certificate-file=/opt/keycloak/keycloak-server.crt.pem", "--https-certificate-key-file=/opt/keycloak/keycloak-server.key.pem"]

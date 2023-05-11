@@ -22,7 +22,7 @@ function App() {
         console.log('User Id: ' + keycloak.subject + ' token: ' + keycloak.token)
         //Получаем перечень ролей пользователя по его токену
         axios.post(          
-          'http://' + window.location.hostname + ':8000/api/v1/verify_token',
+          'http://' + window.location.hostname + '/api/v1/verify_token',
           {access_token: keycloak.token,}
           ).then((response: AxiosResponse) => {
             //console.log(response.data.roles)

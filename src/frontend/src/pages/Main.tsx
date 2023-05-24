@@ -3,6 +3,10 @@ import axios, { AxiosResponse } from 'axios';
 import NavBar from "../components/UI/NavBar";
 
 import { Context } from "../Context";
+import { Grid, GridItem } from "@consta/uikit/Grid";
+import Callbacks from "../components/UI/Callbacks";
+import { Text } from "@consta/uikit/Text";
+import { Card } from "@consta/uikit/Card";
 
 const Main = () => {
     const [result, setResult] = React.useState();
@@ -27,14 +31,26 @@ const Main = () => {
     return(
       <React.Fragment>
         <NavBar/>
-        <div style={{display: 'inline-block', marginLeft: '7%'}}>
-            version:  <div style={{color: 'green'}}>{result}</div>
-        </div>       
+        <Grid cols='5' xAlign="left">
+          <GridItem col='1'>
+            <Text 
+              style={{marginBottom: '10%'}}
+              weight="bold"
+              size="xl">Отклики</Text>
+            <Card shadow>
+              <Callbacks/>
+            </Card>
+          </GridItem>
+          <GridItem col='4'>
+            <div style={{display: 'inline-block', marginLeft: '7%'}}>
+              version:  <div style={{color: 'green'}}>{result}</div>
+            </div>       
 
-        <div style={{display: 'inline-block', marginLeft: '7%'}}>        
-            roles user:  {roleList.map( (it:any) => (<li>{it}</li>))}
-        </div>                                 
-        
+            <div style={{display: 'inline-block', marginLeft: '7%'}}>        
+                roles user:  {roleList.map( (it:any) => (<li>{it}</li>))}
+            </div>     
+          </GridItem>
+        </Grid>
       </React.Fragment>
     )
 };

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Theme, presetGpnDefault } from '@consta/uikit/Theme';
+
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from "./components/AppRouter";
 import { Context } from "./Context.js";
@@ -36,12 +38,14 @@ function App() {
     }
   }, [keycloak.token]);    
 
-  return (    
+  return (
+    <Theme preset={presetGpnDefault}>
       <Context.Provider value={[isAuth, setIsAuth, roleList]}>
         <BrowserRouter>
           <AppRouter />
         </BrowserRouter>
       </Context.Provider>
+    </Theme>
   )
 }
 

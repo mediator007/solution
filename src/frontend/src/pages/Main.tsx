@@ -7,11 +7,7 @@ import { Context } from "../Context";
 const Main = () => {
     const [result, setResult] = React.useState();
     
-    // UNWORKING
-    // const [isAuth, setIsAuth, roleList] = React.useContext(Context)
-    const [isAuth, setIsAuth] = React.useContext(Context)
-    // ADD BLANK array
-    const roleList: any = []
+    const [isAuth, setIsAuth, roleList] = React.useContext(Context)
 
     function getApi () {
       console.log('Test:', window.location.hostname) // result for me: localhost

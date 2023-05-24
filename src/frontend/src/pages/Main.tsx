@@ -10,9 +10,9 @@ const Main = () => {
     const [isAuth, setIsAuth, roleList] = React.useContext(Context)
 
     function getApi () {
-      console.log('Test:', window.location.hostname) // result for me: localhost
+      console.log('Test:', window.location.hostname)
       axios.get(
-        'http://' + window.location.hostname + ':8000/api/v1' // thats why :8000
+        'http://' + window.location.hostname + ':8000/api/v1'
         ).then((response: AxiosResponse) => {
           setResult(response.data.api_version)
         }).catch(error => {

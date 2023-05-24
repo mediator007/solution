@@ -2,6 +2,7 @@
 
 ## Поднятие стенда для разработки
 
+- В файле /src/backend/.env раскомментировать переменные <u>#Develop</u> и закомментировать переменные <u>#Production</u>  
 
 ### Поднятие контейнера БД:  
 1) В терминале из под виртуального окружения прописать команду:    
@@ -79,7 +80,6 @@ http://localhost:8000/api/openapi
 
 ## Prod Deploy:  
 
-- В файле /src/backend/.env раскомментировать переменные <u>#Production</u> и закомментировать переменные <u>#Develop</u>  
 - Для frontend сконфигурировать файл: ./src/Keycloak.tsx (если требуется)
 - Для app_keycloak в docker-compose.yml сменить режим запуска и адрес хоста,отключить импорт настроек рилма (по необходимости)
 - Для backend в docker-compose.yml указать корректные KEYCLOAK_URL, KEYCLOAK_CLIENT_ID, KEYCLOAK_REAL_NAME (если требуется)

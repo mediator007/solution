@@ -7,12 +7,16 @@ import { Context } from "../Context";
 const Main = () => {
     const [result, setResult] = React.useState();
     
-    const [isAuth, setIsAuth, roleList] = React.useContext(Context)
+    // UNWORKING
+    // const [isAuth, setIsAuth, roleList] = React.useContext(Context)
+    const [isAuth, setIsAuth] = React.useContext(Context)
+    // ADD BLANK array
+    const roleList: any = []
 
     function getApi () {
-      console.log('Test:', window.location.hostname)
+      console.log('Test:', window.location.hostname) // result for me: localhost
       axios.get(
-        'http://' + window.location.hostname + '/api/v1'
+        'http://' + window.location.hostname + ':8000/api/v1' // thats why :8000
         ).then((response: AxiosResponse) => {
           setResult(response.data.api_version)
         }).catch(error => {

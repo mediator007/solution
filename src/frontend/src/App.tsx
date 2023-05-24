@@ -16,16 +16,17 @@ function App() {
 
   const { keycloak, initialized } = useKeycloak();
 
-  useEffect(() => {              
+  useEffect(() => {       
+    console.log('USEEFFECT keycloak.token')       
     if(initialized===true) {
       if(keycloak.authenticated===true) {
         console.log('User Id: ' + keycloak.subject + ' token: ' + keycloak.token)
         //Получаем перечень ролей пользователя по его токену
         axios.post(          
-          'http://' + window.location.hostname + '/api/v1/verify_token',
+          'http://' + window.location.hostname + ':8000/api/v1/verify_token',
           {access_token: keycloak.token,}
           ).then((response: AxiosResponse) => {
-            //console.log(response.data.roles)
+            console.log(response.data.roles)
             setRoleList(response.data.roles)
             setIsAuth(true)
           }).catch(error => {

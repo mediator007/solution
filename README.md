@@ -70,6 +70,13 @@ KEYCLOAK_REAL_NAME: "sovkombank"
 
 http://localhost:8080/camunda-welcome/index.html  
 
+Работает с БД.
+Бизнес процесс: загружается непосредственно из camunda-modeler, сохраняется в БД.
+
+Переменные БП:
+endProcess: true - при завершении задачи завершает процесс (по умолчанию false)
+taskReturn: true - при завершении задачи переводит процесс на предыдущую задачу, false - переходим далее (по умолчанию false)
+
 ### Приложение:  
 
 http://localhost:3000  

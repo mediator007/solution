@@ -60,7 +60,8 @@ async def start_process(data: dict) -> Any:
             "http://158.160.29.162:8080/engine-rest/process-definition/key/sovkombank/start",
             json=request
         )
-    print('---------', response)
+    response = json.loads(response.__getattribute__('_content').decode())
+    print('---------', response['id'])
 
 
 @router.post("/move_candidate")

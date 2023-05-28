@@ -7,11 +7,12 @@ import { Grid, GridItem } from "@consta/uikit/Grid";
 import Callbacks from "../components/UI/Callbacks";
 import { Text } from "@consta/uikit/Text";
 import { Card } from "@consta/uikit/Card";
+import Process from "../components/UI/Process";
 
 const Main = () => {
     const [result, setResult] = React.useState();
     
-    const [isAuth, setIsAuth, roleList] = React.useContext(Context)
+    const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
 
     function getApi () {
       console.log('Test:', window.location.hostname)
@@ -32,16 +33,23 @@ const Main = () => {
       <React.Fragment>
         <NavBar/>
         <Grid cols='5' xAlign="left">
+          
           <GridItem col='1'>
             <Text 
               style={{marginBottom: '10%'}}
               weight="bold"
               size="xl">Отклики</Text>
-            <Card shadow>
               <Callbacks/>
-            </Card>
           </GridItem>
+
           <GridItem col='4'>
+          <Text 
+              style={{marginBottom: '3.5%'}}
+              weight="bold"
+              size="xl">Воронка найма</Text>
+            <Process/>
+          </GridItem>
+          {/* <GridItem col='4'>
             <div style={{display: 'inline-block', marginLeft: '7%'}}>
               version:  <div style={{color: 'green'}}>{result}</div>
             </div>       
@@ -49,7 +57,7 @@ const Main = () => {
             <div style={{display: 'inline-block', marginLeft: '7%'}}>        
                 roles user:  {roleList.map( (it:any) => (<li>{it}</li>))}
             </div>     
-          </GridItem>
+          </GridItem> */}
         </Grid>
       </React.Fragment>
     )

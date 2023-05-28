@@ -14,6 +14,7 @@ import { ListFormat } from 'typescript';
 
 function App() {
   const [isAuth, setIsAuth] = useState<Boolean>();
+  const [move, setMove] = useState<Boolean>(false);
   const [roleList, setRoleList] = useState<Array<Text>>([]);
 
   const { keycloak, initialized } = useKeycloak();
@@ -40,7 +41,7 @@ function App() {
 
   return (
     <Theme preset={presetGpnDefault}>
-      <Context.Provider value={[isAuth, setIsAuth, roleList]}>
+      <Context.Provider value={[isAuth, setIsAuth, roleList, move, setMove]}>
         <BrowserRouter>
           <AppRouter />
         </BrowserRouter>

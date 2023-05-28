@@ -23,22 +23,29 @@ async def all_candidates_in_process() -> Any:
         response = await client.get(
             "http://158.160.29.162:8080/engine-rest/task?processDefinitionKey=sovkombank"
         )
-    response = json.loads(response.__getattribute__('_content').decode())
-    for r in response:
-        print(r)
+        response = json.loads(response.__getattribute__('_content').decode())
+        resumes = {'first': list()}
+        for r in response:
+            if r['name'] == 'hr_interview':
+                try:
+                    execution_id = r['executionId']
+                    res = await client.get(
+                        f"http://158.160.29.162:8080/engine-rest/process-instance/{execution_id}/variables"
+                    )
+                    res = json.loads(res.__getattribute__('_content').decode())
+                    candidate = {
+                        'id': execution_id, 
+                        'name': res['name']['value'],
+                        'phone': res['phone']['value'], 
+                        'description': res['description']['value'],
+                        'photo': res['photo']['value'],
+                        }
+                    resumes['first'].append(candidate)
+                except Exception as e:
+                    print(execution_id, e)
     
-    resumes = {
-        'first': [
-            {'name': 'Петров Виктор', 'phone': '8 911 999 99 82', 'description': 'Python, JS'}, 
-            {'name': 'Иванов Петр', 'phone': '8 911 999 99 82', 'description': 'C#'},
-        ],
-        'second': [
-            {'name': 'Степанов Аркадий', 'description': 'Python, C++'},
-        ],
-        'third': [
-            {'name': 'Смирнова Мария', 'phone': '8 911 999 99 82', 'description': 'Go, JS'},
-        ]
-    }
+    resumes['second'] = list()
+    resumes['third'] = list()
     return resumes
 
 @router.post("/start_process")

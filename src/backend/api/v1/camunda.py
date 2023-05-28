@@ -27,6 +27,7 @@ async def all_candidates_in_process() -> Any:
         response = json.loads(response.__getattribute__('_content').decode())
         resumes = {'first': list(), 'second': list(), 'third': list()}
         for r in response:
+            print(r['name'])
             try:
                 execution_id = r['executionId']
                 res = await client.get(
@@ -44,7 +45,7 @@ async def all_candidates_in_process() -> Any:
                     resumes['first'].append(candidate)
                 elif r['name'] == 'manager_look':
                     resumes['second'].append(candidate)
-                elif r['name'] == 'agreement':
+                elif r['name'] == 'manager_interviw':
                     resumes['third'].append(candidate)
                 
             except Exception as e:

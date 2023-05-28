@@ -34,7 +34,7 @@ async def all_candidates_in_process() -> Any:
                 )
                 res = json.loads(res.__getattribute__('_content').decode())
                 candidate = {
-                    'id': execution_id, 
+                    'id': r['id'], 
                     'name': res['name']['value'],
                     'phone': res['phone']['value'], 
                     'description': res['description']['value'],
@@ -78,16 +78,16 @@ async def move_candidate(data: dict) -> Any:
     data = json.loads(data['data'])
     resumes = data['resumes']
     candidate_to_move = data['to_move']
-
-    # Заглушка, двигаем кандидатов вперед по воронке
-    to_next_step = None
-    for key, value in resumes.items():
-        if to_next_step:
-            resumes[key].append(to_next_step)
-            return resumes
-        for index, el in enumerate(value):
-            if candidate_to_move['name'] == el['name']:
-                to_next_step = resumes[key].pop(index)
-                break
+    data = {
+        "variables": {
+            "returnTask":{"value": False}, 
+            "endProcess":{"value": False}
+            }
+        }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"http://158.160.29.162:8080/engine-rest/task/{candidate_to_move['id']}/complete",
+            json=data
+        )
     
     return resumes

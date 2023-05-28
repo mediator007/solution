@@ -80,7 +80,7 @@ const CandidateCard = (props) => {
                     <img
                     width='200'
                     height='160' 
-                    src="https://www.kampai.de/wp-content/uploads/2017/08/profilbild.jpg"/>
+                    src={chosenCandidate.photo}/>
                     </GridItem>
                     <GridItem col='1'/>
                     <GridItem col='2'>

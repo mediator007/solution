@@ -20,9 +20,10 @@ async def read_bpm_users() -> Any:
 
 @router.get("/all_candidates_in_process", response_model=Dict[str, List])
 async def all_candidates_in_process() -> Any:
+    bpm = os.environ.get('BPM_HOST')
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            "http://158.160.29.162:8080/engine-rest/task?processDefinitionKey=sovkombank"
+            f"http://{bpm}:8080/engine-rest/task?processDefinitionKey=sovkombank"
         )
         response = json.loads(response.__getattribute__('_content').decode())
         resumes = {'first': list(), 'second': list(), 'third': list()}
@@ -31,7 +32,7 @@ async def all_candidates_in_process() -> Any:
             try:
                 execution_id = r['executionId']
                 res = await client.get(
-                    f"http://158.160.29.162:8080/engine-rest/process-instance/{execution_id}/variables"
+                    f"http://{bpm}:8080/engine-rest/process-instance/{execution_id}/variables"
                 )
                 res = json.loads(res.__getattribute__('_content').decode())
                 candidate = {
@@ -54,6 +55,7 @@ async def all_candidates_in_process() -> Any:
 
 @router.post("/start_process")
 async def start_process(data: dict) -> Any:
+    bpm = os.environ.get('BPM_HOST')
     data = json.loads(data['data'])
     candidate_to_move = data['to_move']
     request = {
@@ -68,7 +70,7 @@ async def start_process(data: dict) -> Any:
         }
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            "http://158.160.29.162:8080/engine-rest/process-definition/key/sovkombank/start",
+            f"http://{bpm}:8080/engine-rest/process-definition/key/sovkombank/start",
             json=request
         )
     response = json.loads(response.__getattribute__('_content').decode())
@@ -76,6 +78,7 @@ async def start_process(data: dict) -> Any:
 
 @router.post("/move_candidate")
 async def move_candidate(data: dict) -> Any:
+    bpm = os.environ.get('BPM_HOST')
     data = json.loads(data['data'])
     resumes = data['resumes']
     candidate_to_move = data['to_move']
@@ -87,7 +90,7 @@ async def move_candidate(data: dict) -> Any:
         }
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            f"http://158.160.29.162:8080/engine-rest/task/{candidate_to_move['id']}/complete",
+            f"http://{bpm}:8080/engine-rest/task/{candidate_to_move['id']}/complete",
             json=data
         )
     

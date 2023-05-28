@@ -17,6 +17,12 @@ const CandidateCardCallback = (props) => {
     const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
 
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [chosenCandidate, setChosenCandidate] = React.useState()
+
+    function openCard (candidate) {
+        setChosenCandidate(candidate)
+        setModalOpen(true)
+    };
           
     return(
         <Fragment>
@@ -40,7 +46,7 @@ const CandidateCardCallback = (props) => {
                     </GridItem>
                     <GridItem col='1'>
                         <Button
-                        onClick={()=>setModalOpen(true)}>Подробнее</Button>
+                        onClick={()=>openCard(resume)}>Подробнее</Button>
                     </GridItem>
                     <GridItem col='1'>
                         <Button
@@ -52,15 +58,45 @@ const CandidateCardCallback = (props) => {
             <Modal
             isOpen={modalOpen}
             hasOverlay
-            onClickOutside={() => setModalOpen(false)}
+            onClickOutside={() => setModalOpen(true)}
         >
             <Card 
                 shadow='false'
                 verticalSpace="3xl" 
                 horizontalSpace="3xl"
-                style={{marginTop: '20%'}}
+                style={{marginTop: '2%'}}
                 >
-            Карточка кандидата
+                {chosenCandidate && (
+                <Grid cols='5' xAlign="center">
+                    <GridItem col='5' style={{marginBottom: '5%'}}>
+                    <b>Карточка кандидата</b>
+                    </GridItem>
+                    <GridItem col='2'>
+                    <img
+                    width='200'
+                    height='160' 
+                    src={chosenCandidate.photo}/>
+                    </GridItem>
+                    <GridItem col='1'/>
+                    <GridItem col='2'>
+                        <Grid cols='1'>
+                            <GridItem col='1'>
+                            <b>ФИО:</b> {chosenCandidate.name}
+                            </GridItem>
+                            <GridItem col='1'>
+                            <b>Телефон:</b> {chosenCandidate.phone}
+                            </GridItem>
+                            <GridItem col='1'>
+                            <b>Навыки:</b> {chosenCandidate.description}
+                            </GridItem>
+                        </Grid>
+                    </GridItem>
+                    <Button
+                        style={{marginTop: '10%'}}
+                        onClick={() => setModalOpen(false) }>Закрыть</Button>
+                    
+                </Grid>
+                )}
             </Card>
         </Modal>
         </Fragment>

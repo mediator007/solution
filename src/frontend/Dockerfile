@@ -10,7 +10,7 @@ COPY ./src /app/src
 COPY ./public /app/public
 COPY ./tsconfig.json /app/tsconfig.json
 
-RUN export NODE_OPTIONS="--max-old-space-size=1024"
+RUN export NODE_OPTIONS=--max-old-space-size=5120
 
 RUN npm run build
 

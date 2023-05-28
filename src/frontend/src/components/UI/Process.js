@@ -47,12 +47,19 @@ const Process = () => {
                 'http://' + window.location.hostname + ':8000/api/v1/bpm/move_candidate',
                 {data: JSON.stringify(data)}
                 ).then((response) => {
-                    setFirst(response.data.first)
-                    setSecond(response.data.second)
-                    setThird(response.data.third)
+                    axios.get(
+                        'http://' + window.location.hostname + ':8000/api/v1/bpm/all_candidates_in_process'
+                        ).then((response) => {
+                            setFirst(response.data.first)
+                            setSecond(response.data.second)
+                            setThird(response.data.third)
+                        }).catch(error => {
+                            console.log('---error', error)
+                        })
                 }).catch(error => {
                     console.log('---error', error)
                 })
+            
         }
         setMove(false)
     },[move])

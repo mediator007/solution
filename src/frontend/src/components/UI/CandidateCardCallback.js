@@ -11,7 +11,7 @@ import { Text } from '@consta/uikit/Text';
 import { Grid, GridItem } from "@consta/uikit/Grid";
 import { Modal } from '@consta/uikit/Modal';
 
-const CandidateCard = (props) => {
+const CandidateCardCallback = (props) => {
     const resume = props.resume
 
     const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
@@ -27,27 +27,25 @@ const CandidateCard = (props) => {
                 style={{marginBottom: '10%', minWidth: '250px'}}>
                 <Grid cols='2'>
                     <GridItem col='2'>
-                        <Text 
-                        weight="bold">Имя</Text>
+                        <Text weight="bold">Имя</Text>
                     </GridItem>
                     <GridItem col='2'>
                         {resume.name}
                     </GridItem>
-                    {/* <GridItem col='2'>
+                    <GridItem col='2'>
                         <Text weight="bold">Рейтинг</Text>
                     </GridItem>
                     <GridItem col='2'>
                         {resume.rating}
-                    </GridItem> */}
-                    <GridItem col='2'>
+                    </GridItem>
+                    <GridItem col='1'>
                         <Button
-                        style={{marginBottom: '5%'}}
                         onClick={()=>setModalOpen(true)}>Подробнее</Button>
                     </GridItem>
-                    <GridItem col='2'>
+                    <GridItem col='1'>
                         <Button
-                        variant="success"
-                        onClick={()=>setMove(resume)}>Вперед</Button>
+                        variant="warning"
+                        onClick={()=>setMove(resume)}>В работу</Button>
                     </GridItem>
                 </Grid>
             </Card>
@@ -71,4 +69,4 @@ const CandidateCard = (props) => {
 
 
 
-export default CandidateCard;
+export default CandidateCardCallback;

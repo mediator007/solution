@@ -34,9 +34,16 @@ const Process = () => {
     
     useEffect(()=>{
         if (move) {
+            let data = {
+                to_move: move, resumes: {
+                    first: first, 
+                    second: second,
+                    third: third,
+                }
+            }
             axios.post(
                 'http://' + window.location.hostname + ':8000/api/v1/bpm/move_candidate',
-                {data: JSON.stringify(move)}
+                {data: JSON.stringify(data)}
                 ).then((response) => {
                     setFirst(response.data.first)
                     setSecond(response.data.second)
@@ -62,10 +69,27 @@ const Process = () => {
         
         <Fragment>
             
-            <Grid cols='3'>
-                <GridItem col='1'>{createCards(first)}</GridItem>
-                <GridItem col='1'>{createCards(second)}</GridItem>
-                <GridItem col='1'>{createCards(third)}</GridItem>
+            <Grid cols='12' xAlign="center">
+                <GridItem col='3'>
+                <Text 
+                    style={{marginBottom: '3.5%'}}
+                    size="xl">Этап согласования</Text>
+                    {createCards(first)}
+                </GridItem>
+                <GridItem col='1'/>
+                <GridItem col='3'>
+                <Text 
+                    style={{marginBottom: '3.5%'}}
+                    size="xl">Этап обеседования</Text>
+                    {createCards(second)}
+                </GridItem>
+                <GridItem col='1'/>
+                <GridItem col='3'>
+                <Text 
+                    style={{marginBottom: '3.5%'}}
+                    size="xl">Оффер</Text>
+                    {createCards(third)}
+                    </GridItem>
             </Grid>
             
         </Fragment>

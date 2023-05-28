@@ -19,7 +19,7 @@ async def callbacks() -> Any:
         ]
     # rate resumes
     resumes = [
-        {'name': 'Qwerty Qwertyuytre', 'rating': 99}, 
-        {'name': 'Йцукен Йцукенович', 'rating': 76},
+        {'name': 'Пупкин Виктор', 'rating': 99}, 
+        {'name': 'Андреева Ольга', 'rating': 76},
         ]
     return resumes

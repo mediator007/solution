@@ -32,19 +32,19 @@ const Main = () => {
     return(
       <React.Fragment>
         <NavBar/>
-        <Grid cols='5' xAlign="left">
+        <Grid cols='12' xAlign="left">
           
-          <GridItem col='1'>
+          <GridItem col='3'>
             <Text 
-              style={{marginBottom: '10%'}}
+              style={{marginBottom: '15%', marginTop: '14%'}}
               weight="bold"
               size="xl">Отклики</Text>
               <Callbacks/>
           </GridItem>
-
-          <GridItem col='4'>
+          <GridItem col='1'/>
+          <GridItem col='8'>
           <Text 
-              style={{marginBottom: '3.5%'}}
+              style={{marginBottom: '1%', marginTop: '4%'}}
               weight="bold"
               size="xl">Воронка найма</Text>
             <Process/>

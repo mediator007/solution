@@ -19,8 +19,7 @@ function App() {
 
   const { keycloak, initialized } = useKeycloak();
 
-  useEffect(() => {       
-    console.log('USEEFFECT keycloak.token')       
+  useEffect(() => {             
     if(initialized===true) {
       if(keycloak.authenticated===true) {
         console.log('User Id: ' + keycloak.subject + ' token: ' + keycloak.token)

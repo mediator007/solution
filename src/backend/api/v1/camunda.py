@@ -22,14 +22,14 @@ async def all_candidates_in_process() -> Any:
     # rate resumes
     resumes = {
         'first': [
-            {'name': 'Qwerty Qwertyuytre', 'rating': 99}, 
-            {'name': 'Йцукен Йцукенович', 'rating': 76},
+            {'name': 'Петров Виктор', 'rating': 99}, 
+            {'name': 'Иванов Петр', 'rating': 76},
         ],
         'second': [
-            {'name': 'Peter Johnson', 'rating': 76},
+            {'name': 'Степанов Аркадий', 'rating': 76},
         ],
         'third': [
-            {'name': 'John Peterson', 'rating': 23},
+            {'name': 'Смирнова Мария', 'rating': 23},
         ]
     }
     return resumes
@@ -37,18 +37,19 @@ async def all_candidates_in_process() -> Any:
 
 @router.post("/move_candidate")
 async def move_candidate(data: dict) -> Any:
-    candidate_to_move = json.loads(data['data'])
-    print(candidate_to_move)
-    resumes = {
-        'first': [
-            {'name': 'Qwerty Qwertyuytre', 'rating': 99}, 
-            {'name': 'Йцукен Йцукенович', 'rating': 76},
-        ],
-        'second': [
-            {'name': 'Peter Johnson', 'rating': 76},
-        ],
-        'third': [
-            {'name': 'John Peterson', 'rating': 23},
-        ]
-    }
+    data = json.loads(data['data'])
+    resumes = data['resumes']
+    candidate_to_move = data['to_move']
+
+    # Заглушка, двигаем кандидатов вперед по воронке
+    to_next_step = None
+    for key, value in resumes.items():
+        if to_next_step:
+            resumes[key].append(to_next_step)
+            return resumes
+        for index, el in enumerate(value):
+            if candidate_to_move['name'] == el['name']:
+                to_next_step = resumes[key].pop(index)
+                break
+    
     return resumes

@@ -10,7 +10,7 @@ import { Card } from "@consta/uikit/Card";
 import { Text } from '@consta/uikit/Text';
 import { Grid, GridItem } from "@consta/uikit/Grid";
 import { Modal } from '@consta/uikit/Modal';
-import CandidateCard from "./CandidateCard";
+import CandidateCardCallback from "./CandidateCardCallback";
 
 const Callbacks = () => {
     const [resumes, setResumes] = React.useState([]);
@@ -31,7 +31,7 @@ const Callbacks = () => {
         let result = []
         for (let resume of resumes) {
             result.push(
-                <CandidateCard resume={resume}/>
+                <CandidateCardCallback resume={resume}/>
             )
         } 
         return(result)

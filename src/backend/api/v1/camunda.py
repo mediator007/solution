@@ -22,14 +22,14 @@ async def all_candidates_in_process() -> Any:
     # rate resumes
     resumes = {
         'first': [
-            {'name': 'Петров Виктор', 'rating': 99}, 
-            {'name': 'Иванов Петр', 'rating': 76},
+            {'name': 'Петров Виктор', 'phone': '8 911 999 99 82', 'description': 'Python, JS'}, 
+            {'name': 'Иванов Петр', 'phone': '8 911 999 99 82', 'description': 'C#'},
         ],
         'second': [
-            {'name': 'Степанов Аркадий', 'rating': 76},
+            {'name': 'Степанов Аркадий', 'description': 'Python, C++'},
         ],
         'third': [
-            {'name': 'Смирнова Мария', 'rating': 23},
+            {'name': 'Смирнова Мария', 'phone': '8 911 999 99 82', 'description': 'Go, JS'},
         ]
     }
     return resumes

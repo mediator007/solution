@@ -14,7 +14,9 @@ import CandidateCard from "./CandidateCard";
 
 const Process = () => {
     // for understand when Move button click
-    const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
+    const [
+        isAuth, setIsAuth, roleList, move, setMove, start, setStart
+    ] = React.useContext(Context)
 
     const [first, setFirst] = React.useState([]);
     const [second, setSecond] = React.useState([]);
@@ -54,6 +56,25 @@ const Process = () => {
         }
         setMove(false)
     },[move])
+
+    useEffect(()=>{
+        if (start) {
+            let data = {
+                to_move: start
+            }
+            axios.post(
+                'http://' + window.location.hostname + ':8000/api/v1/bpm/start_process',
+                {data: JSON.stringify(data)}
+                ).then((response) => {
+                    setFirst(response.data.first)
+                    setSecond(response.data.second)
+                    setThird(response.data.third)
+                }).catch(error => {
+                    console.log('---error', error)
+                })
+        }
+        setMove(false)
+    },[start])
 
     function createCards (stage) {
         let result = []

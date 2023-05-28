@@ -14,7 +14,9 @@ import { Modal } from '@consta/uikit/Modal';
 const CandidateCardCallback = (props) => {
     const resume = props.resume
 
-    const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
+    const [
+        isAuth, setIsAuth, roleList, move, setMove, start, setStart
+    ] = React.useContext(Context)
 
     const [modalOpen, setModalOpen] = React.useState(false);
     const [chosenCandidate, setChosenCandidate] = React.useState()
@@ -51,7 +53,7 @@ const CandidateCardCallback = (props) => {
                     <GridItem col='1'>
                         <Button
                         variant="warning"
-                        onClick={()=>setMove(resume)}>В работу</Button>
+                        onClick={()=>setStart(resume)}>В работу</Button>
                     </GridItem>
                 </Grid>
             </Card>

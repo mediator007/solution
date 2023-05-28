@@ -14,7 +14,9 @@ import { Modal } from '@consta/uikit/Modal';
 const CandidateCard = (props) => {
     const resume = props.resume
 
-    const [isAuth, setIsAuth, roleList, move, setMove] = React.useContext(Context)
+    const [
+        isAuth, setIsAuth, roleList, move, setMove, start, setStart
+    ] = React.useContext(Context)
 
     const [modalOpen, setModalOpen] = React.useState(false);
     const [chosenCandidate, setChosenCandidate] = React.useState()

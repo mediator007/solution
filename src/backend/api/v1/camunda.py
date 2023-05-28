@@ -34,6 +34,26 @@ async def all_candidates_in_process() -> Any:
     }
     return resumes
 
+@router.post("/start_process")
+async def start_process(data: dict) -> Any:
+    data = json.loads(data['data'])
+    candidate_to_move = data['to_move']
+    request = {
+        "variables":
+            {
+                "name" : {"value" : candidate_to_move['name'], "type": "String"},
+                "phone" : {"value" : candidate_to_move['phone'], "type": "String"},
+                "description" : {"value" : candidate_to_move['description'], "type": "String"},
+                "photo" : {"value" : candidate_to_move['photo'], "type": "String"}
+            },
+        "businessKey" : "HR_Business_Key"
+        }
+    response = httpx.post(
+        "http://158.160.29.162:8080/engine-rest/process-definition/key/sovkombank/start",
+        json=request
+        )
+    print('---------', response)
+
 
 @router.post("/move_candidate")
 async def move_candidate(data: dict) -> Any:

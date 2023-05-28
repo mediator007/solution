@@ -11,7 +11,8 @@ const LoginForm = () => {
 
   function login (event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    setIsAuth(true)
+    //setIsAuth(true)
+    location.reload()
   };
 
   useEffect(()=>{
@@ -23,7 +24,7 @@ const LoginForm = () => {
   function LoginForm() {
     return (
       <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        {/*<Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email"/>
           <Form.Text className="text-muted">
@@ -35,7 +36,7 @@ const LoginForm = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+    </Form.Group>*/}
         <Button variant="primary" type="submit" onClick={login}>
           Войти
         </Button>

@@ -19,7 +19,14 @@ async def read_bpm_users() -> Any:
 
 @router.get("/all_candidates_in_process", response_model=Dict[str, List])
 async def all_candidates_in_process() -> Any:
-    # rate resumes
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            "http://158.160.29.162:8080/engine-rest/task?processDefinitionKey=sovkombank"
+        )
+    response = json.loads(response.__getattribute__('_content').decode())
+    for r in response:
+        print(r)
+    
     resumes = {
         'first': [
             {'name': 'Петров Виктор', 'phone': '8 911 999 99 82', 'description': 'Python, JS'}, 
@@ -48,9 +55,10 @@ async def start_process(data: dict) -> Any:
             },
         "businessKey" : "HR_Business_Key"
         }
-    response = httpx.post(
-        "http://158.160.29.162:8080/engine-rest/process-definition/key/sovkombank/start",
-        json=request
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "http://158.160.29.162:8080/engine-rest/process-definition/key/sovkombank/start",
+            json=request
         )
     print('---------', response)
 

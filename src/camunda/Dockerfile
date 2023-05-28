@@ -5,3 +5,4 @@ COPY ./config/server.xml /camunda/conf/
 USER 0
 RUN chmod a+r /camunda/conf/bpm-platform.xml
 RUN chmod a+r /camunda/conf/server.xml
+

@@ -12,7 +12,7 @@ const LoginForm = () => {
   function login (event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     //setIsAuth(true)
-    location.reload()
+    window.location.reload()
   };
 
   useEffect(()=>{

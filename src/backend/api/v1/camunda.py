@@ -6,6 +6,7 @@ from typing import Any, List, Dict
 from fastapi import APIRouter
 import httpx
 
+
 router = APIRouter()
 
 @router.get("/")
@@ -24,28 +25,30 @@ async def all_candidates_in_process() -> Any:
             "http://158.160.29.162:8080/engine-rest/task?processDefinitionKey=sovkombank"
         )
         response = json.loads(response.__getattribute__('_content').decode())
-        resumes = {'first': list()}
+        resumes = {'first': list(), 'second': list(), 'third': list()}
         for r in response:
-            if r['name'] == 'hr_interview':
-                try:
-                    execution_id = r['executionId']
-                    res = await client.get(
-                        f"http://158.160.29.162:8080/engine-rest/process-instance/{execution_id}/variables"
-                    )
-                    res = json.loads(res.__getattribute__('_content').decode())
-                    candidate = {
-                        'id': execution_id, 
-                        'name': res['name']['value'],
-                        'phone': res['phone']['value'], 
-                        'description': res['description']['value'],
-                        'photo': res['photo']['value'],
-                        }
+            try:
+                execution_id = r['executionId']
+                res = await client.get(
+                    f"http://158.160.29.162:8080/engine-rest/process-instance/{execution_id}/variables"
+                )
+                res = json.loads(res.__getattribute__('_content').decode())
+                candidate = {
+                    'id': execution_id, 
+                    'name': res['name']['value'],
+                    'phone': res['phone']['value'], 
+                    'description': res['description']['value'],
+                    'photo': res['photo']['value'],
+                    }
+                if r['name'] == 'hr_interview':
                     resumes['first'].append(candidate)
-                except Exception as e:
-                    print(execution_id, e)
-    
-    resumes['second'] = list()
-    resumes['third'] = list()
+                elif r['name'] == 'manager_look':
+                    resumes['second'].append(candidate)
+                elif r['name'] == 'agreement':
+                    resumes['third'].append(candidate)
+                
+            except Exception as e:
+                print(execution_id, e)
     return resumes
 
 @router.post("/start_process")
@@ -68,7 +71,6 @@ async def start_process(data: dict) -> Any:
             json=request
         )
     response = json.loads(response.__getattribute__('_content').decode())
-    print('---------', response['id'])
 
 
 @router.post("/move_candidate")

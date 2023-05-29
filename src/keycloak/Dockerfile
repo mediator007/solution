@@ -24,4 +24,4 @@ RUN chmod a+r /opt/keycloak/*.pem
 
 
 # Start container in dev mode
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--https-certificate-file=/opt/keycloak/keycloak-server.crt.pem", "--https-certificate-key-file=/opt/keycloak/keycloak-server.key.pem"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev"]

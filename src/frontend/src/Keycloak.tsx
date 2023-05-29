@@ -2,7 +2,7 @@ import Keycloak from "keycloak-js";
 
 
 const keycloak: Keycloak = new Keycloak({
-  url: "https://" + window.location.hostname + ":3443",
+  url: "http://" + window.location.hostname + ":3080",
   realm: "sovkombank",
   clientId: "sovkombank",
 })

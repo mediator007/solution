@@ -43,7 +43,7 @@ services:
         restart: always
         # override entrypoint for import settings Realm Sovkombank
         #entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]
-        entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--https-certificate-file=/opt/keycloak/keycloak-server.crt.pem", "--https-certificate-key-file=/opt/keycloak/keycloak-server.key.pem", "--import-realm"]    
+        entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev", "--import-realm"]    
 
         
     database:
